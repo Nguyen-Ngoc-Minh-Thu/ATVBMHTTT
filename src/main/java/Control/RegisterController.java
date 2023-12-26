@@ -5,6 +5,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.ServletRequest;
 import Dao.AccountDao;
 import Entity.Account;
+import service.PasswordEncoder;
 import service.UserService;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -39,7 +40,8 @@ public class RegisterController extends HttpServlet
             final UserService service = new UserService();
             final Account account = service.findAccount(email);
             if (account == null) {
-                final Account acountNew = new Account(email, password, fullname, phone, sex, newsletter);
+                String encodePassword = PasswordEncoder.hashPassword(password);
+                final Account acountNew = new Account(email, encodePassword, fullname, phone, sex, newsletter);
                 AccountDao.addAccount(acountNew);
                 System.out.println(acountNew.toString());
                 request.setAttribute("mess", "Đăng ký tài khoản thành công");

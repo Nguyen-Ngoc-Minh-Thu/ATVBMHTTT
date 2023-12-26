@@ -7,6 +7,8 @@ package Control;
 
 import Dao.AccountDao;
 import Entity.Account;
+import service.PasswordEncoder;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
@@ -39,11 +41,11 @@ public class ChangePasswordController extends HttpServlet
         String password = request.getParameter("password");
         String newpassword = request.getParameter("newpassword");
         String confirm = request.getParameter("confirm");
-        if(account.getPassword().equals(password))
+        if(PasswordEncoder.checkPassword(password, account.getPassword()))
         {
             if(newpassword.equals(confirm))
             {
-                account.setPassword(newpassword);
+                account.setPassword(PasswordEncoder.hashPassword(newpassword));
                 try
                 {
                     AccountDao.updatePassword(account);

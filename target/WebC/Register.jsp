@@ -10,6 +10,7 @@
   <script src="JS/Custom.js" type="text/javascript"></script>
 </head>
 <body>
+
 <jsp:include page="Layout/Header.jsp" />
 <div id="account-register" class="container">
   <ul class="breadcrumb">

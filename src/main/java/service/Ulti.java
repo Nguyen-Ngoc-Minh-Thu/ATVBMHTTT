@@ -19,4 +19,16 @@ public class Ulti
         }
         return str;
     }
+
+    public static String randomOTP() {
+        String result = "";
+        Random random = new Random();
+
+        for (int i = 0; i < 6; i++) {
+            int randomNumber = random.nextInt(10);
+            result += Integer.toString(randomNumber);
+        }
+
+        return result;
+    }
 }
