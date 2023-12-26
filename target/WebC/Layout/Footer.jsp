@@ -16,7 +16,7 @@
                                     <li><i class="fa fa-phone"></i>0776849194</li>
                                     <li><i class="fa fa-fax"></i>0987654321</li>
                                     <li><i class="fa fa-envelope"></i><a
-                                            href="mailto:20130215@st.hcmuaf.edu.vn">20130215@st.hcmuaf.edu.vn</a>
+                                            href="mailto:20130215@st.hcmuaf.edu.vn">20130463@st.hcmuaf.edu.vn</a>
                                     </li>
                                 </ul>
                             </div>
@@ -117,19 +117,19 @@
             <div class="row">
                 <div class="col-md-6">
                     <p class="powered">Copyright 2022 ©<a
-                            href="https://www.facebook.com/nguyendaccuong2002/">Cường</a></p>
+                            href="https://www.facebook.com/yenvi.2201/">Vi</a></p>
                 </div>
                 <div class="col-md-6">
                     <div class="position-footer-bottom">
                         <div>
                             <div class="social-block">
                                 <ul>
-                                    <li><a href="https://www.facebook.com/nguyendaccuong2002/"><i
+                                    <li><a href="https://www.facebook.com/yenvi.2201/"><i
                                             class="fa-brands fa-facebook"></i></a></li>
                                     <li><a href="https://www.youtube.com/channel/UCWKTeKUQS3TxUuwOLHOpung"><i
                                             class="fa-brands fa-youtube"></i></a></li>
                                     <li><a href="#"><i class="fa-brands fa-google"></i></a></li>
-                                    <li><a href="https://github.com/NguyenDacCuong2604"><i
+                                    <li><a href="https://github.com/nguyenthiyenvi20130463"><i
                                             class="fa-brands fa-github"></i></a></li>
                                 </ul>
                             </div>

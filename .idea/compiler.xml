@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="CTVWeb" />
         <module name="CVTWeb" />
+        <module name="Project_TTLTW" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

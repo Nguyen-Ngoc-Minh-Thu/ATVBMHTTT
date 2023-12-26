@@ -39,6 +39,12 @@
       <artifactId>commons-email</artifactId>
       <version>1.5</version>
     </dependency>
+    <!--them thu vien BCrypt-->
+    <dependency>
+      <groupId>org.mindrot</groupId>
+      <artifactId>jbcrypt</artifactId>
+      <version>0.4</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>WebC</finalName>

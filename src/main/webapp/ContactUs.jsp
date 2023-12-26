@@ -47,7 +47,7 @@
     </div>
     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 contact-right">
       <!-- mẫu liên hệ -->
-      <p>Hãy gửi yêu cầu, thắc mắc, hoặc muốn liên hệ với shop. Vui lòng gửi mail vào địa chỉ: nguyendaccuong2002@gmail.com</p>
+      <p>Hãy gửi yêu cầu, thắc mắc, hoặc muốn liên hệ với shop. Vui lòng gửi mail vào địa chỉ: nguyenyenvi12345@gmail.com</p>
     </div>
   </div>
 </div>

@@ -1,11 +1,13 @@
 package Control;
 
+import Dao.AccountDao;
 import Entity.Account;
 import Entity.MailConfig;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
+import service.Ulti;
 import service.UserService;
 
 import javax.servlet.*;
@@ -41,23 +43,27 @@ public class SendMail extends HttpServlet {
                 request.getRequestDispatcher("Login.jsp").forward(request, response);
                 return;
             }
+            else {
+                String OTP = Ulti.randomOTP();
+                AccountDao.insertOTP(account.getUsername(), OTP);
+                email.setFrom(MailConfig.APP_EMAIL);
+                // Người nhận
+                email.addTo(account.getUsername());
 
-            email.setFrom(MailConfig.APP_EMAIL);
-            // Người nhận
-            email.addTo(account.getUsername());
+                // Tiêu đề
+                email.setSubject("CVT: Gui ma OTP cho ban. Ma OTP nay co hieu luc trong 60s ke tu khi nhan duoc mail nay!");
 
-            // Tiêu đề
-            email.setSubject("CVT: Gui lai mat khau cho ban");
+                // Nội dung email
+                email.setMsg("Ma OTP cua ban la: " + OTP);
 
-            // Nội dung email
-            email.setMsg("Mat khau cua ban la: "+account.getPassword());
+                // send message
+                email.send();
 
-            // send message
-            email.send();
-
-            System.out.println("Message sent successfully");
-            request.setAttribute("mess", "Đã gửi lại mật khẩu vào mail của bạn");
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
+                System.out.println("Message sent successfully");
+                request.setAttribute("mess", "Đã gui ma OTP vào mail của bạn");
+                request.setAttribute("username", account.getUsername());
+                request.getRequestDispatcher("CheckOTP.jsp").forward(request, response);
+            }
         } catch (EmailException | SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
