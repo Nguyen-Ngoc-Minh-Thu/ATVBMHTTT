@@ -4,7 +4,6 @@ import java.sql.*;
 
 public class DBConnect {
     private static DBConnect instance;
-
     private static String DB_URL = "jdbc:mysql://localhost:3306/project";
     private static String user = "root";
     private static String password = "";

@@ -90,32 +90,29 @@
             </div>
           </div>
 
-
+<<<<<< phannguyengiangan
+          <!-- ... các trường biểu mẫu hiện tại ... -->
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-publickey">Public Key</label>
             <div class="col-sm-8">
-              <input type="text" name="publickey" value="" placeholder="Public Key" id="input-publickey"
-                     class="form-control" required/>
-
+              <input type="text" name="publickey" value="<%= session.getAttribute("publicKey") %>" placeholder="Public Key" id="input-publickey"
+                     class="form-control" required />
             </div>
             <div class="col-sm-12 text-right">
-
-              <button type="button" onclick="generateKey()" class="btn btn-default custom-button">Tạo
-                Key
-              </button>
+              <!-- Nút "Tạo Key" -->
+              <button type="button" onclick="generateKey()" class="btn btn-default custom-button">Tạo Key</button>
 
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-privatekey">Private Key</label>
             <div class="col-sm-8">
-              <input type="text" name="privatekey" value="" placeholder="Private Key"
-                     id="input-privatekey"
-                     class="form-control" required/>
+<<<<<< phannguyengiangan
+              <input type="text" name="privatekey" value="<%= session.getAttribute("privateKey") %>" placeholder="Private Key" id="input-privatekey"
+                     class="form-control" required />
             </div>
-
           </div>
-
+          <!-- ... các trường biểu mẫu còn lại ... -->
 
 
         </fieldset>
@@ -193,6 +190,26 @@
 
     }
   }
+
+
+  function generateKey() {
+    // Gửi yêu cầu Ajax đến máy chủ để tạo khóa
+    $.ajax({
+      type: "POST",
+      url: "GenerateKeyServlet", // Assume you have a servlet to handle key generation
+      dataType: "json",
+      success: function (data) {
+        // Set giá trị public key và private key vào các trường đầu vào
+        $("#input-publickey").val(data.publicKey);
+        $("#input-privatekey").val(data.privateKey);
+      },
+      error: function () {
+        alert("Lỗi khi tạo khóa");
+      },
+    });
+  }
+
+
 
 
 </script>

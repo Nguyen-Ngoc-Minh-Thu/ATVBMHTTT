@@ -45,6 +45,21 @@
       <artifactId>jbcrypt</artifactId>
       <version>0.4</version>
     </dependency>
+
+    <!-- Nếu sử dụng Maven -->
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk15on</artifactId>
+      <version>1.68</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20210307</version> <!-- Phiên bản mới nhất có sẵn tại thời điểm bạn đang sử dụng JDK 17 -->
+    </dependency>
+
+
   </dependencies>
   <build>
     <finalName>WebC</finalName>

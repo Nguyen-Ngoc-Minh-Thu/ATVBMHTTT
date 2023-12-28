@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
+import java.security.KeyPair;
 
 @WebServlet(name = "RegisterController", value = { "/Register" })
 public class RegisterController extends HttpServlet
@@ -42,6 +43,20 @@ public class RegisterController extends HttpServlet
             if (account == null) {
                 String encodePassword = PasswordEncoder.hashPassword(password);
                 final Account acountNew = new Account(email, encodePassword, fullname, phone, sex, newsletter);
+                // Tạo cặp khóa
+                KeyPair keyPair;
+                String publicKey;
+                String privateKey;
+
+                do {
+                    keyPair = AccountDao.generateKeyPair();
+                    publicKey = AccountDao.getPublicKeyAsBase64(keyPair.getPublic());
+                } while (AccountDao.isPublicKeyExists(publicKey));
+
+                privateKey = AccountDao.getPrivateKeyAsBase64(keyPair.getPrivate());
+
+                // Lưu public key vào đối tượng Account
+                acountNew.setPublicKey(publicKey);
                 AccountDao.addAccount(acountNew);
                 System.out.println(acountNew.toString());
                 request.setAttribute("mess", "Đăng ký tài khoản thành công");
@@ -53,6 +68,8 @@ public class RegisterController extends HttpServlet
             }
         }
         catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
