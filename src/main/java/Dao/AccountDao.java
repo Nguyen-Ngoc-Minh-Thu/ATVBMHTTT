@@ -10,18 +10,24 @@ import java.util.List;
 import Connect.DataDB;
 import Entity.Account;
 import service.Ulti;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.util.Base64;
 
 public class AccountDao
 {
     public static void addAccount(final Account account) throws SQLException, ClassNotFoundException {
         DataDB db = new DataDB();
-        PreparedStatement sta = db.getStatement("insert into account (username, password, fullname, phone, sex, role, enabled, newsletter, date) values (?, ?, ?, ?, ?, 1, 1, ?, now())");
+        PreparedStatement sta = db.getStatement("insert into account (username, password, fullname, phone, sex, role, enabled, newsletter, date,  publicKey) values (?, ?, ?, ?, ?, 1, 1, ?, now(), ?)");
         sta.setString(1, account.getUsername());
         sta.setString(2, account.getPassword());
         sta.setString(3, account.getFullName());
         sta.setString(4, account.getPhoneNumber());
         sta.setInt(5, account.getSex());
         sta.setString(6, ""+account.getNewsletter());
+        sta.setString(7, account.getPublicKey());
         sta.executeUpdate();
     }
 
@@ -129,5 +135,30 @@ public class AccountDao
             list.add(account);
         }
         return list;
+    }
+
+//   tao key
+    public static KeyPair generateKeyPair() throws Exception {
+        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+        keyGen.initialize(2048); // Độ dài của khóa
+        return keyGen.generateKeyPair();
+    }
+
+    public static String getPublicKeyAsBase64(PublicKey publicKey) {
+        return Base64.getEncoder().encodeToString(publicKey.getEncoded());
+    }
+
+    public static String getPrivateKeyAsBase64(PrivateKey privateKey) {
+        return Base64.getEncoder().encodeToString(privateKey.getEncoded());
+    }
+// kiểm tra có bị trùng khóa
+    public static boolean isPublicKeyExists(String publicKey) throws SQLException, ClassNotFoundException {
+        DataDB db = new DataDB();
+        PreparedStatement sta = db.getStatement("SELECT COUNT(*) AS count FROM account WHERE publicKey = ?");
+        sta.setString(1, publicKey);
+        ResultSet rs = sta.executeQuery();
+        rs.next();
+        int count = rs.getInt("count");
+        return count > 0;
     }
 }
