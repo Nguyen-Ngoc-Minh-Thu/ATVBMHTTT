@@ -137,12 +137,7 @@ public class AccountDao
         return list;
     }
 
-//   tao key
-    public static KeyPair generateKeyPair() throws Exception {
-        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-        keyGen.initialize(2048); // Độ dài của khóa
-        return keyGen.generateKeyPair();
-    }
+
 
     public static String getPublicKeyAsBase64(PublicKey publicKey) {
         return Base64.getEncoder().encodeToString(publicKey.getEncoded());

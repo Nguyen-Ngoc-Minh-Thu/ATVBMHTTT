@@ -8,7 +8,8 @@ import java.util.List;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import Connect.DataDB;
-
+import Entity.OrderDetails;
+import java.util.Base64;
 import javax.xml.crypto.Data;
 
 public class OrderDao
@@ -134,4 +135,62 @@ public class OrderDao
         }
         return list;
     }
+
+    public static List<ProductOrder> getProductDetailsForOrder(String id_order) throws SQLException, ClassNotFoundException {
+        List<ProductOrder> list = new ArrayList<ProductOrder>();
+        DataDB db = new DataDB();
+        PreparedStatement sta = db.getStatement("SELECT * FROM product_order WHERE id_order = ?");
+        sta.setString(1, id_order);
+        ResultSet rs = sta.executeQuery();
+        ProductOrder p;
+        while (rs.next()) {
+            p = new ProductOrder(rs.getInt("id"), rs.getString("id_order"), rs.getString("id_product"), rs.getInt("quantity"), rs.getInt("total"));
+            list.add(p);
+        }
+        return list;
+    }
+
+
+
+    public void updateOrderWithSignature(String id_order, String signature) throws SQLException, ClassNotFoundException {
+        DataDB db = new DataDB();
+        PreparedStatement sta = db.getStatement("UPDATE order1 SET signature = ? WHERE id = ?");
+        sta.setString(1, signature);
+        sta.setString(2, id_order);
+        sta.executeUpdate();
+    }
+
+    public OrderDetails getOrderDetails(String id_order) throws SQLException, ClassNotFoundException {
+        Order order = getOrder(id_order);
+        List<ProductOrder> productOrders = getProductDetailsForOrder(id_order);
+        return new OrderDetails(order, productOrders);
+    }
+
+    public String getSignatureByIdOrder(String id_order) throws SQLException, ClassNotFoundException {
+        DataDB db = new DataDB();
+        PreparedStatement sta = db.getStatement("SELECT signature FROM order1 WHERE id = ?");
+        sta.setString(1, id_order);
+        ResultSet rs = sta.executeQuery();
+
+        if (rs.next()) {
+            return rs.getString("signature");
+        }
+
+        return null; // Trả về null nếu không tìm thấy chữ ký cho id_order
+    }
+    public String getPublicKeyByUsername(String username) throws SQLException, ClassNotFoundException {
+        DataDB db = new DataDB();
+        PreparedStatement sta = db.getStatement("SELECT publicKey FROM account WHERE username = ?");
+        sta.setString(1, username);
+        ResultSet rs = sta.executeQuery();
+
+        if (rs.next()) {
+            return rs.getString("publicKey");
+        }
+
+        return null; // Trả về null nếu không tìm thấy public key cho username
+    }
+
+
+
 }

@@ -5,6 +5,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import Dao.AccountDao;
+import RSASigner.RSASigner;
 import org.json.JSONObject;
 import java.security.KeyPair;
 
@@ -12,34 +13,33 @@ import java.security.KeyPair;
 public class GenerateKeyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RSASigner rsa = new RSASigner();
+        try {
+            rsa.generateKeyPair();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        String publicKey = rsa.publicKeyToString();
+        String privateKey = rsa.privateKeyToString();
+
+        // Lưu trữ khóa công khai và khóa riêng tư trong session
+        HttpSession session = request.getSession();
+        session.setAttribute("publicKey", publicKey);
+        session.setAttribute("privateKey", privateKey);
+
+        // Gửi dữ liệu JSON chứa khóa công khai và khóa riêng tư về client
+        JSONObject responseData = new JSONObject();
+        responseData.put("publicKey", publicKey);
+        responseData.put("privateKey", privateKey);
+
+        response.setContentType("application/json");
+        response.getWriter().write(responseData.toString());
 
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        try {
-            String publicKey;
-            String privateKey;
-            KeyPair keyPair;
-
-            do {
-                // Tạo khóa mới cho đến khi nó là duy nhất
-                keyPair = AccountDao.generateKeyPair();
-                publicKey = AccountDao.getPublicKeyAsBase64(keyPair.getPublic());
-                privateKey = AccountDao.getPrivateKeyAsBase64(keyPair.getPrivate());
-            } while (AccountDao.isPublicKeyExists(publicKey));
-
-            // Trả về khóa dưới dạng JSON
-            JSONObject keysJson = new JSONObject();
-            keysJson.put("publicKey", publicKey);
-            keysJson.put("privateKey", privateKey);
-
-            response.setContentType("application/json");
-            response.getWriter().write(keysJson.toString());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
 }

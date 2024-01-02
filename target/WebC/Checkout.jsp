@@ -86,6 +86,18 @@
                          id="" class="form-control" required>
                 </div>
               </div>
+
+              <%--private key--%>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-private-key">Private Key</label>
+                <div class="col-sm-10">
+                  <input type="text" name="private_key" value="" placeholder="Nhập private key"
+                         id="input-private-key" class="form-control" required>
+                </div>
+              </div>
+              <%----%>
+
+
             </fieldset>
           </div>
         </div>
@@ -175,7 +187,8 @@
               </div>
             </div>
           </div>
-        <div class="buttons">
+
+          <div class="buttons">
           <div class="pull-right">
             <input type="submit" value="Thanh toán hóa đơn" id="button-confirm"
                    data-loading-text="Loading..." class="btn btn-primary">
