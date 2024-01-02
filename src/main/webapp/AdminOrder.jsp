@@ -29,6 +29,7 @@
 
     <!-- FAVICON -->
     <link href="assets/img/logoshop.png" rel="shortcut icon" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 
 <body class="ec-header-fixed ec-sidebar-fixed ec-sidebar-dark ec-header-light" id="body">
@@ -311,6 +312,10 @@
 
                                                 </tbody>
                                             </table>
+<%--                                            button Xác nhận ký--%>
+                                            <button type="button" onclick="verifySignature()">Kiểm tra chữ ký</button>
+                                            <span id="signature-result"></span>
+
                                         </div>
                                     </div>
                                 </div>
@@ -377,4 +382,20 @@
 <!-- Ekka Custom -->
 <script src="assets/js/ekka.js"></script>
 </body>
+
+<!-- Thêm đoạn mã JavaScript -->
+<script>
+    function verifySignature() {
+        var orderId = '<%=order.getId()%>';
+
+        // Gửi yêu cầu kiểm tra chữ ký đến Servlet (VerifySignatureController)
+        $.post('VerifySignatureController', {orderId: orderId}, function(data) {
+            // Xử lý kết quả trả về từ Servlet (data)
+            var resultElement = $('#signature-result');
+            resultElement.text(data); // Hiển thị thông báo kết quả
+        });
+    }
+</script>
+
+
 </html>

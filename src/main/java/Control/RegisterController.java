@@ -3,24 +3,28 @@ package Control;
 import java.sql.SQLException;
 import javax.servlet.ServletResponse;
 import javax.servlet.ServletRequest;
+
 import Dao.AccountDao;
 import Entity.Account;
+import RSASigner.RSASigner;
+import org.json.JSONObject;
 import service.PasswordEncoder;
 import service.UserService;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpSession;
 import java.security.KeyPair;
 
-@WebServlet(name = "RegisterController", value = { "/Register" })
-public class RegisterController extends HttpServlet
-{
+@WebServlet(name = "RegisterController", value = {"/Register"})
+public class RegisterController extends HttpServlet {
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
     }
-    
+
     protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         final String firstname = request.getParameter("firstname");
         final String lastname = request.getParameter("lastname");
@@ -28,11 +32,12 @@ public class RegisterController extends HttpServlet
         final String phone = request.getParameter("telephone");
         final String password = request.getParameter("password");
         final String verifyPassword = request.getParameter("confirm");
+        String publicKey = request.getParameter("publicKey");
         final int newsletter = 0;
         final int sex = Integer.parseInt(request.getParameter("male"));
-        System.out.println(password+"-"+verifyPassword);
-        final String fullname =  firstname+" "+ lastname;
-        if(!password.equals(verifyPassword)){
+        System.out.println(password + "-" + verifyPassword);
+        final String fullname = firstname + " " + lastname;
+        if (!password.equals(verifyPassword)) {
             request.setAttribute("mess", "Mật khẩu không trùng khớp! Vui lòng nhập lại");
             request.getRequestDispatcher("Register.jsp").forward(request, response);
             return;
@@ -43,34 +48,23 @@ public class RegisterController extends HttpServlet
             if (account == null) {
                 String encodePassword = PasswordEncoder.hashPassword(password);
                 final Account acountNew = new Account(email, encodePassword, fullname, phone, sex, newsletter);
-                // Tạo cặp khóa
-                KeyPair keyPair;
-                String publicKey;
-                String privateKey;
 
-                do {
-                    keyPair = AccountDao.generateKeyPair();
-                    publicKey = AccountDao.getPublicKeyAsBase64(keyPair.getPublic());
-                } while (AccountDao.isPublicKeyExists(publicKey));
 
-                privateKey = AccountDao.getPrivateKeyAsBase64(keyPair.getPrivate());
-
-                // Lưu public key vào đối tượng Account
                 acountNew.setPublicKey(publicKey);
                 AccountDao.addAccount(acountNew);
                 System.out.println(acountNew.toString());
                 request.setAttribute("mess", "Đăng ký tài khoản thành công");
                 request.getRequestDispatcher("Login.jsp").forward(request, response);
-            }
-            else {
+            } else {
                 request.setAttribute("mess", "Tài khoản đã tồn tại!");
-                request.getRequestDispatcher("Register.jsp").forward((ServletRequest)request, (ServletResponse)response);
+                request.getRequestDispatcher("Register.jsp").forward((ServletRequest) request, (ServletResponse) response);
             }
-        }
-        catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
+
 }
