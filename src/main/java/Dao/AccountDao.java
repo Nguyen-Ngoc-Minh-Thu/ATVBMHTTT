@@ -4,7 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import Connect.DataDB;
@@ -20,14 +22,13 @@ public class AccountDao
 {
     public static void addAccount(final Account account) throws SQLException, ClassNotFoundException {
         DataDB db = new DataDB();
-        PreparedStatement sta = db.getStatement("insert into account (username, password, fullname, phone, sex, role, enabled, newsletter, date,  publicKey) values (?, ?, ?, ?, ?, 1, 1, ?, now(), ?)");
+        PreparedStatement sta = db.getStatement("insert into account (username, password, fullname, phone, sex, role, enabled, newsletter, date) values (?, ?, ?, ?, ?, 1, 1, ?, now())");
         sta.setString(1, account.getUsername());
         sta.setString(2, account.getPassword());
         sta.setString(3, account.getFullName());
         sta.setString(4, account.getPhoneNumber());
         sta.setInt(5, account.getSex());
         sta.setString(6, ""+account.getNewsletter());
-        sta.setString(7, account.getPublicKey());
         sta.executeUpdate();
     }
 
@@ -155,5 +156,20 @@ public class AccountDao
         rs.next();
         int count = rs.getInt("count");
         return count > 0;
+    }
+
+    //lưu public key vô db
+    public static void addPublicKey(String username, String publickey) throws SQLException, ClassNotFoundException {
+        DataDB db = new DataDB();
+        //ngày hiện tại tạo key
+        Date today = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String todayFM = formatter.format(today);
+        PreparedStatement sta = db.getStatement("INSERT INTO publickey (username, publickey_txt, create_day, STATUS) VALUES (?, ?, ?, ?)");
+        sta.setString(1, username);
+        sta.setString(2, publickey);
+        sta.setString(3, todayFM);
+        sta.setString(4, "đang được dùng" );
+        sta.executeUpdate();
     }
 }

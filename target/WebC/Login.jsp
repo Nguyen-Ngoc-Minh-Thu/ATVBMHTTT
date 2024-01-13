@@ -56,7 +56,6 @@
                                 <input type="password" name="password" value="" placeholder="Mật khẩu"
                                        id="input-password" class="form-control" required />
                                 <br>
-                                <div class="g-recaptcha" data-sitekey="6Lfgxb0kAAAAAApXx43Y6BkDxbvs6QKDPmnIVsHm"></div>
                                 <p id="error" style="color:red"></p>
                                 <!-- link trang quên mật khẩu -->
                                 <a href="Forgottenpassword.jsp">Quên
@@ -68,23 +67,7 @@
 
 
                         </form>
-                        <script>
-                            window.onload = function (){
-                                let isValid = false;
-                                const form = document.getElementById("form");
-                                const error = document.getElementById("error");
-                                form.addEventListener("submit", function (event) {
-                                    event.preventDefault();
-                                    const response =  grecaptcha.getResponse();
-                                    if(response){
-                                        form.submit();
-                                    }
-                                    else{
-                                        error.innerHTML = "Please check";
-                                    }
-                                })
-                            }
-                        </script>
+
                     </div>
                 </div>
             </div>

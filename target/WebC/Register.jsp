@@ -93,11 +93,11 @@
                             </button>
                         </div>
                     </div>
-                    <div class="form-group required">
-                        <label class="col-sm-2 control-label" for="input-privatekey">Private Key</label>
+                    <div class="form-group required d-none">
+                        <label class="col-sm-2 control-label" for="input-privateKey">Private Key</label>
                         <div class="col-sm-8">
-                            <input type="text" name="privatekey" value="<%= session.getAttribute("privateKey") %>"
-                                   placeholder="Private Key" id="input-privatekey"
+                            <input type="text" name="privateKey" value="<%= session.getAttribute("privateKey") %>"
+                                   placeholder="Private Key" id="input-privateKey"
                                    class="form-control" required/>
                         </div>
                     </div>
@@ -119,6 +119,20 @@
                             <input type="password" name="confirm" value="" placeholder="Xác nhận mật khẩu"
                                    id="input-confirm" class="form-control"/>
                         </div>
+                    </div>
+
+
+                    <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="input-otp">Mã OTP</label>
+                        <div class="col-sm-10">
+                            <input type="number" name="otp" value="" placeholder="Mã OTP" id="input-otp" class="form-control" required/>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 text-right">
+                        <!-- Nút "Tạo Key" -->
+                        <button type="button" onclick="randomOTP()" class="btn btn-default custom-button">Gửi OTP
+                        </button>
+                        <p>Thời gian còn lại: <span id="timer">01:00</span></p>
                     </div>
                 </fieldset>
                 <div class="buttons">
@@ -152,8 +166,8 @@
             type: 'GET',
             success: function (data) {
                 // Cập nhật giá trị của ô input publickey và privatekey sau khi nhận phản hồi từ servlet
-                $('#input-publickey').val(data.publicKey);
-                $('#input-privatekey').val(data.privateKey);
+                $('#input-publickey').val(data.publicKey).prop('readonly', true);
+                $('#input-privateKey').val(data.privateKey).prop('readonly', true);
             },
             error: function () {
                 alert('Đã xảy ra lỗi khi tạo khóa.');
@@ -161,12 +175,59 @@
         });
     }
 
+    function  randomOTP() {
+        let username = document.getElementById("input-email").value
+        $.ajax({
+            url: "VerifyOTP",
+            type: "POST",
+            data: {username: username},
+            success: function (response) {
+                if(parseInt(response) === 1){
+                    alert('Mã xác nhận đã gửi đến mail của bạn, OTP có hiệu lực trong 1 phút!');
+                    startTimerOnClick();
+                }else{
+                    alert('Gửi mã OTP không thành công!');
+                }
+
+            }
+        });
+    }
+    function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                // Hết thời gian, xử lý ở đây (ví dụ: gửi yêu cầu mới)
+                alert("OTP đã hết hạn. Vui lòng gửi lại yêu cầu OTP.");
+                timer = duration; // Reset timer
+            }
+        }, 1000);
+    }
+
+    function startTimerOnClick() {
+        var oneMinute = 60,
+            display = document.querySelector('#timer');
+        startTimer(oneMinute, display);
+
+        // Bắt đầu đếm giờ khi nút được nhấn
+        timerInterval = setInterval(function () {
+            // Gọi hàm kiểm tra thời gian tại đây (nếu cần)
+        }, 1000);
+    }
+
     function validation() {
         var pass = document.form1.password.value;
 
         var pass2 = document.getElementById("input-password")
 
-        if (pass.length < 6) {
+        if (pass.length < 2) {
 
             alert("Mật khẩu phải có từ 6 ký tự trở lên")
             pass2.style.border = "1px solid red";

@@ -5,6 +5,7 @@ import Entity.Order;
 import Entity.OrderDetails;
 import Entity.ProductOrder;
 import RSASigner.RSASigner;
+import service.SendMail;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -62,6 +63,13 @@ public class VerifySignatureController extends HttpServlet {
             } else {
                 // Chữ ký không hợp lệ
                 response.getWriter().write("Chữ ký không hợp lệ");
+                String subject = "Lỗi trong quá trình xác thực đơn hàng!!!";
+                String message = "Xin Chào " + order.getUsername() + ",\n\n"
+                        + "Chúng tôi nhận thấy rằng đơn hàng có mã " + order.getId() + " của bạn đã có chút thay đổi so với lúc đầu. "
+                        + "Nên không thể xác nhận được, chúng tôi đã tiến hành hủy đơn hàng và bạn hãy đặt lại đơn hàng mới. Xin lỗi quý khách vì sự bất tiện này.\n\n"
+                        + "Chúc bạn một ngày tốt lành,\n" + "ShopCVT";
+                SendMail.send(order.getUsername(),subject, message);
+
             }
 
         } catch (SQLException | ClassNotFoundException e) {
