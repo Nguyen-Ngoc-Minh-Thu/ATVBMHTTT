@@ -180,16 +180,18 @@ public class OrderDao
     }
     public String getPublicKeyByUsername(String username) throws SQLException, ClassNotFoundException {
         DataDB db = new DataDB();
-        PreparedStatement sta = db.getStatement("SELECT publicKey FROM account WHERE username = ?");
+        PreparedStatement sta = db.getStatement("SELECT publicKey_txt FROM publicKey WHERE username = ?");
         sta.setString(1, username);
         ResultSet rs = sta.executeQuery();
 
         if (rs.next()) {
-            return rs.getString("publicKey");
+            return rs.getString("publicKey_txt");
         }
 
         return null; // Trả về null nếu không tìm thấy public key cho username
     }
+
+
 
 
 

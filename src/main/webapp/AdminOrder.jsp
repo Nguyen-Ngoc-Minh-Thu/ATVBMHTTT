@@ -327,12 +327,17 @@
                             <form action="AdminEditOrder?idorder=<%=order.getId()%>" method="post">
                                 <span class="text-uppercase">Trạng thái đơn hàng</span>
                                 <select name="status" id="lang-select">
-                                    <%if(order.getStatus().equals("Đang xử lý")){ %>
+                                    <% if(order.getStatus().equals("Đang xử lý")){ %>
                                     <option value="Đang xử lý" disabled selected>Đang xử lý</option>
+                                    <option value="Hủy đơn hàng">Hủy đơn hàng</option>
+                                    <option value="Đã xác nhận">Đã xác nhận</option>
+                                    <% } else if(order.getStatus().equals("Hủy đơn hàng")){ %>
+                                    <option value="Hủy đơn hàng" disabled selected>Hủy đơn hàng</option>
+                                    <option value="Hủy đơn hàng">Hủy đơn hàng</option>
                                     <option value="Đã xác nhận">Đã xác nhận</option>
                                     <% } else if(order.getStatus().equals("Đã xác nhận")){ %>
                                     <option value="Đã xác nhận" disabled selected>Đã xác nhận</option>
-                                    <option value="Đang giao hàng" >Đang giao hàng</option>
+                                    <option value="Đang giao hàng">Đang giao hàng</option>
                                     <% } else if(order.getStatus().equals("Đang giao hàng")) { %>
                                     <option value="Đang giao hàng" disabled selected>Đang giao hàng</option>
                                     <option value="Giao hàng thành công">Giao hàng thành công</option>
