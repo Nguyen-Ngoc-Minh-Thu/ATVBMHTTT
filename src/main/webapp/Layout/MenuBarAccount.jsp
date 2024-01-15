@@ -27,6 +27,7 @@
                     <a href="Changepassword.jsp" class="list-group-item">Đổi mật khẩu</a>
                     <a href="Cart" class="list-group-item">Giỏ hàng của bạn</a>
                     <a href="HistoryOrder" class="list-group-item">Lịch sử đơn hàng</a>
+                    <a href="ReportPrivate" class="list-group-item">Báo cáo lộ key</a>
                     <a href="LogOutController" class="list-group-item">Đăng xuất</a>
                     <br>
                 </ul>

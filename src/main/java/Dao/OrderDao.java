@@ -180,7 +180,7 @@ public class OrderDao
     }
     public String getPublicKeyByUsername(String username) throws SQLException, ClassNotFoundException {
         DataDB db = new DataDB();
-        PreparedStatement sta = db.getStatement("SELECT publicKey_txt FROM publicKey WHERE username = ?");
+        PreparedStatement sta = db.getStatement("SELECT publicKey_txt FROM publicKey WHERE username = ? and expired_day is Null ");
         sta.setString(1, username);
         ResultSet rs = sta.executeQuery();
 

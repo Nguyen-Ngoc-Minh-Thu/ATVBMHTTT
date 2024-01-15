@@ -105,4 +105,30 @@ public class RSASigner {
         return keyFactory.generatePrivate(keySpec);
     }
 
+    //thư
+    public String getPrivateKey() {
+        if (keyPair == null) {
+            try {
+                generateKeyPair();
+            } catch (Exception e) {
+                throw new RuntimeException("Error generating key pair", e);
+            }
+        }
+        this.privateKey = keyPair.getPrivate();
+        return Base64.getEncoder().encodeToString(privateKey.getEncoded());
+    }
+
+    public String getPublicKey() {
+        if (keyPair == null) {
+            try {
+                generateKeyPair();
+            } catch (Exception e) {
+                throw new RuntimeException("Error generating key pair", e);
+            }
+        }
+        this.publicKey = keyPair.getPublic();
+        return Base64.getEncoder().encodeToString(publicKey.getEncoded());
+    }
+
+
 }

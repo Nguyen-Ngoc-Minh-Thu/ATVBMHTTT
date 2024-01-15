@@ -172,4 +172,29 @@ public class AccountDao
         sta.setString(4, "đang được dùng" );
         sta.executeUpdate();
     }
+
+
+    //Thư
+    public static void setExpiredPublicKey(String username, String date) throws SQLException, ClassNotFoundException {
+        DataDB db = new DataDB();
+        PreparedStatement sta = db.getStatement("update publickey set missing_day = ?, report_day = ?, expired_day = ?, STATUS = 'đã hết hạn' where username = ? and create_day < ? and expired_day is Null ");
+        sta.setString(1, date);
+        sta.setString(2, date);
+        sta.setString(3, date);
+        sta.setString(4,username);
+        sta.setString(5, date);
+        sta.executeUpdate();
+    }
+
+    public static void addPublicKey(String username, String publickey_txt, String date) throws SQLException, ClassNotFoundException {
+
+        DataDB db = new DataDB();
+        PreparedStatement sta = db.getStatement("insert into publickey (username, publickey_txt, create_day, STATUS) values (?, ?, ?, ?)");
+        sta.setString(1, username);
+        sta.setString(2, publickey_txt);
+        sta.setString(3, date);
+        sta.setString(4, "đang được dùng");
+        sta.executeUpdate();
+
+    }
 }
