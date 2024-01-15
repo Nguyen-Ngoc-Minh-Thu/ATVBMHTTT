@@ -4,12 +4,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import Connect.DataDB;
 import Entity.Account;
 import service.Ulti;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.util.Base64;
 
 public class AccountDao
 {
@@ -129,5 +136,64 @@ public class AccountDao
             list.add(account);
         }
         return list;
+    }
+
+
+
+    public static String getPublicKeyAsBase64(PublicKey publicKey) {
+        return Base64.getEncoder().encodeToString(publicKey.getEncoded());
+    }
+
+    public static String getPrivateKeyAsBase64(PrivateKey privateKey) {
+        return Base64.getEncoder().encodeToString(privateKey.getEncoded());
+    }
+// kiểm tra có bị trùng khóa
+    public static boolean isPublicKeyExists(String publicKey) throws SQLException, ClassNotFoundException {
+        DataDB db = new DataDB();
+        PreparedStatement sta = db.getStatement("SELECT COUNT(*) AS count FROM account WHERE publicKey = ?");
+        sta.setString(1, publicKey);
+        ResultSet rs = sta.executeQuery();
+        rs.next();
+        int count = rs.getInt("count");
+        return count > 0;
+    }
+
+    //lưu public key vô db
+    public static void addPublicKey(String username, String publickey) throws SQLException, ClassNotFoundException {
+        DataDB db = new DataDB();
+        //ngày hiện tại tạo key
+        Date today = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String todayFM = formatter.format(today);
+        PreparedStatement sta = db.getStatement("INSERT INTO publickey (username, publickey_txt, create_day, STATUS) VALUES (?, ?, ?, ?)");
+        sta.setString(1, username);
+        sta.setString(2, publickey);
+        sta.setString(3, todayFM);
+        sta.setString(4, "đang được dùng" );
+        sta.executeUpdate();
+    }
+
+    //Thư
+    public static void setExpiredPublicKey(String username, String date) throws SQLException, ClassNotFoundException {
+        DataDB db = new DataDB();
+        PreparedStatement sta = db.getStatement("update publickey set missing_day = ?, report_day = ?, expired_day = ?, STATUS = 'đã hết hạn' where username = ? and create_day < ? and expired_day is Null ");
+        sta.setString(1, date);
+        sta.setString(2, date);
+        sta.setString(3, date);
+        sta.setString(4,username);
+        sta.setString(5, date);
+        sta.executeUpdate();
+    }
+
+    public static void addPublicKey(String username, String publickey_txt, String date) throws SQLException, ClassNotFoundException {
+
+        DataDB db = new DataDB();
+        PreparedStatement sta = db.getStatement("insert into publickey (username, publickey_txt, create_day, STATUS) values (?, ?, ?, ?)");
+        sta.setString(1, username);
+        sta.setString(2, publickey_txt);
+        sta.setString(3, date);
+        sta.setString(4, "đang được dùng");
+        sta.executeUpdate();
+
     }
 }

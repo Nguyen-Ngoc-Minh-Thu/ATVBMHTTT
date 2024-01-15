@@ -13,6 +13,7 @@ public class Account
     private int enable;
     private Date date;
     private int role;
+
     public Account(String username, String password, String fullName, String phoneNumber, int sex, int newsletter) {
         this.username = username;
         this.password = password;
@@ -93,6 +94,7 @@ public class Account
     public void setSex(int sex) {
         this.sex = sex;
     }
+
 
     @Override
     public String toString() {

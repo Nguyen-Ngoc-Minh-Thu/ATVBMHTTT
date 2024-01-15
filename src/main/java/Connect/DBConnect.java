@@ -4,11 +4,12 @@ import java.sql.*;
 
 public class DBConnect {
     private static DBConnect instance;
-
     private static String DB_URL = "jdbc:mysql://localhost:3306/project";
-    private static String user = "root";
+      private static String user = "root";
     private static String password = "";
-
+//    private static String DB_URL = "jdbc:mysql://103.9.159.203:3306/project";
+//    private static String user = "root";
+//    private static String password = "12345";
     private Connection connection;
 
     private DBConnect(){
