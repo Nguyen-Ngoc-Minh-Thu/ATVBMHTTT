@@ -18,15 +18,14 @@ import static Utils.MailUtils.sendEmail;
 public class ReportPrivateController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Account account = (Account)request.getSession().getAttribute("account");
-        if(account == null)
-        {
+        Account account = (Account) request.getSession().getAttribute("account");
+        if (account == null) {
             response.sendRedirect("Login.jsp");
             return;
         }
         System.out.println(account.getUsername());
-        String messString = (String)request.getAttribute("message");
-        if(messString==null) {
+        String messString = (String) request.getAttribute("message");
+        if (messString == null) {
             HttpSession session = request.getSession();
             String confirmCode = createOTP();
             try {
@@ -42,9 +41,10 @@ public class ReportPrivateController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response){
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 
     }
+
     public static String createOTP() {
         Random rd = new Random();
         String confirmCode = rd.nextInt(1000000) + "";

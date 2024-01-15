@@ -9,6 +9,7 @@
         <module name="CTVWeb" />
         <module name="CVTWeb" />
         <module name="Project_TTLTW" />
+        <module name="ATVBMHTTT" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

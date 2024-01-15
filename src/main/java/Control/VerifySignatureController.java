@@ -37,7 +37,6 @@ public class VerifySignatureController extends HttpServlet {
             String receivedSignature = orderDao.getSignatureByIdOrder(id_order);
 
             // Lấy thông tin đơn hàng và sản phẩm từ cơ sở dữ liệu
-//            OrderDetails orderDetails = orderDao.getOrderDetails(id_order);
             List<ProductOrder> productOrderList = OrderDao.getProductDetailsForOrder(id_order);
             String listP = "";
             for (ProductOrder list11 : productOrderList) {
@@ -50,27 +49,37 @@ public class VerifySignatureController extends HttpServlet {
             String publicKey = orderDao.getPublicKeyByUsername(order.getUsername());
 
             // Xác minh chữ ký
-//            boolean signatureValid = RSASigner.verify(orderDetails.toString(), receivedSignature, publicKey);
             RSASigner rsa = new RSASigner();
-            // Tạo chữ ký RSA dựa trên thông tin đơn hàng và chi tiết sản phẩm
 
+            // Tạo chữ ký RSA dựa trên thông tin đơn hàng và chi tiết sản phẩm
             String signature = rsa.decrypt(receivedSignature,publicKey);
             System.out.println(data);
             System.out.println("de   "+signature);
-            if (signature.equals(data)) {
-                // Gửi thông điệp thành công
-                response.getWriter().write("Chữ ký hợp lệ");
+            if(signature != null){
+                if (signature.equals(data)) {
+                    // Gửi thông điệp thành công
+                    response.getWriter().write("Chữ ký hợp lệ");
+                }else{
+                    response.getWriter().write("Chữ ký không hợp lệ");
+                    String subject = "Lỗi trong quá trình xác thực đơn hàng!!!";
+                    String message = "Xin Chào " + order.getUsername() + ",\n\n"
+                            + "Chúng tôi nhận thấy rằng đơn hàng có mã #" + order.getId() + " của bạn đã có chút thay đổi so với lúc đầu. "
+                            + "Nên không thể xác nhận được, chúng tôi đã tiến hành hủy đơn hàng và bạn hãy đặt lại đơn hàng mới. Xin lỗi quý khách vì sự bất tiện này.\n\n"
+                            + "Chúc bạn một ngày tốt lành,\n" + "ShopCVT";
+                    SendMail.send(order.getUsername(),subject, message);
+                }
             } else {
                 // Chữ ký không hợp lệ
                 response.getWriter().write("Chữ ký không hợp lệ");
                 String subject = "Lỗi trong quá trình xác thực đơn hàng!!!";
                 String message = "Xin Chào " + order.getUsername() + ",\n\n"
-                        + "Chúng tôi nhận thấy rằng đơn hàng có mã " + order.getId() + " của bạn đã có chút thay đổi so với lúc đầu. "
+                        + "Chúng tôi nhận thấy rằng đơn hàng có mã #" + order.getId() + " của bạn đã có chút thay đổi so với lúc đầu. "
                         + "Nên không thể xác nhận được, chúng tôi đã tiến hành hủy đơn hàng và bạn hãy đặt lại đơn hàng mới. Xin lỗi quý khách vì sự bất tiện này.\n\n"
                         + "Chúc bạn một ngày tốt lành,\n" + "ShopCVT";
                 SendMail.send(order.getUsername(),subject, message);
 
             }
+
 
         } catch (SQLException | ClassNotFoundException e) {
             throw new ServletException(e);

@@ -87,9 +87,6 @@ public class CheckOrderController extends HttpServlet {
             String od= fullname + numberphone + address + comment+listP;
             String signature = rsa.encrypt(od, privateKey);
 
-// Encode chữ ký thành chuỗi Base64 để lưu vào cơ sở dữ liệu
-//            String signatureBase64 = Base64.getEncoder().encodeToString(signatureBytes);
-
 // Lưu chữ ký vào cơ sở dữ liệu
             dao.updateOrderWithSignature(id_order, signature);
             request.getRequestDispatcher("Success.jsp").forward(request, response);

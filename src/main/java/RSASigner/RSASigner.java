@@ -16,44 +16,16 @@ public class RSASigner {
     private PrivateKey privateKey;
 
     public void generateKeyPair() throws Exception {
-        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-        keyGen.initialize(2048); // Độ dài của khóa
-        keyPair = keyGen.generateKeyPair();
-        publicKey = keyPair.getPublic();
-        privateKey = keyPair.getPrivate();
+        if (keyPair == null) {
+            KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+            keyGen.initialize(2048); // Độ dài của khóa
+            keyPair = keyGen.generateKeyPair();
+            publicKey = keyPair.getPublic();
+            privateKey = keyPair.getPrivate();
+        }
 
     }
 
-//    public static byte[] sign(String data, String privateKeyStr) throws Exception {
-//        byte[] dataBytes = data.getBytes("UTF-8");
-//
-//        byte[] privateKeyBytes = Base64.getDecoder().decode(privateKeyStr);
-//        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKeyBytes);
-//        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-//        PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
-//
-//        Signature signature = Signature.getInstance("SHA256withRSA");
-//        signature.initSign(privateKey);
-//        signature.update(dataBytes);
-//
-//        return signature.sign();
-//    }
-
-//    public static boolean verify(String data, String signatureStr, String publicKeyStr) throws Exception {
-//        byte[] dataBytes = data.getBytes("UTF-8");
-//        byte[] signatureBytes = Base64.getDecoder().decode(signatureStr);
-//        byte[] publicKeyBytes = Base64.getDecoder().decode(publicKeyStr);
-//
-//        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-//        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicKeyBytes);
-//        PublicKey publicKey = keyFactory.generatePublic(keySpec);
-//
-//        Signature signature = Signature.getInstance("SHA256withRSA");
-//        signature.initVerify(publicKey);
-//        signature.update(dataBytes);
-//
-//        return signature.verify(signatureBytes);
-//    }
 
 
     // Hàm chuyển đổi khóa công khai sang chuỗi
@@ -87,7 +59,7 @@ public class RSASigner {
             return new String(output, StandardCharsets.UTF_8);
         } catch (InvalidKeySpecException | NoSuchAlgorithmException | NoSuchPaddingException |
                  InvalidKeyException | BadPaddingException | IllegalBlockSizeException e) {
-            throw new RuntimeException("Error decrypting data", e);
+            return null;
         }
     }
 
@@ -129,6 +101,5 @@ public class RSASigner {
         this.publicKey = keyPair.getPublic();
         return Base64.getEncoder().encodeToString(publicKey.getEncoded());
     }
-
 
 }
