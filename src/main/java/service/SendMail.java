@@ -7,8 +7,10 @@ import java.util.Properties;
 
 public class SendMail {
     public static void send(String to, String sub, String msg) {
+
         final String user = "20130421@st.hcmuaf.edu.vn";
         final  String pass = "minh@thu12";
+
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");

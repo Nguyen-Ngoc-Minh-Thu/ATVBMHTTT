@@ -29,6 +29,7 @@
 
     <!-- FAVICON -->
     <link href="assets/img/logoshop.png" rel="shortcut icon" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 
 <body class="ec-header-fixed ec-sidebar-fixed ec-sidebar-dark ec-header-light" id="body">
@@ -311,6 +312,10 @@
 
                                                 </tbody>
                                             </table>
+<%--                                            button Xác nhận ký--%>
+                                            <button type="button" onclick="verifySignature()">Kiểm tra chữ ký</button>
+                                            <span id="signature-result"></span>
+
                                         </div>
                                     </div>
                                 </div>
@@ -322,12 +327,17 @@
                             <form action="AdminEditOrder?idorder=<%=order.getId()%>" method="post">
                                 <span class="text-uppercase">Trạng thái đơn hàng</span>
                                 <select name="status" id="lang-select">
-                                    <%if(order.getStatus().equals("Đang xử lý")){ %>
+                                    <% if(order.getStatus().equals("Đang xử lý")){ %>
                                     <option value="Đang xử lý" disabled selected>Đang xử lý</option>
+                                    <option value="Hủy đơn hàng">Hủy đơn hàng</option>
+                                    <option value="Đã xác nhận">Đã xác nhận</option>
+                                    <% } else if(order.getStatus().equals("Hủy đơn hàng")){ %>
+                                    <option value="Hủy đơn hàng" disabled selected>Hủy đơn hàng</option>
+                                    <option value="Hủy đơn hàng">Hủy đơn hàng</option>
                                     <option value="Đã xác nhận">Đã xác nhận</option>
                                     <% } else if(order.getStatus().equals("Đã xác nhận")){ %>
                                     <option value="Đã xác nhận" disabled selected>Đã xác nhận</option>
-                                    <option value="Đang giao hàng" >Đang giao hàng</option>
+                                    <option value="Đang giao hàng">Đang giao hàng</option>
                                     <% } else if(order.getStatus().equals("Đang giao hàng")) { %>
                                     <option value="Đang giao hàng" disabled selected>Đang giao hàng</option>
                                     <option value="Giao hàng thành công">Giao hàng thành công</option>
@@ -377,4 +387,20 @@
 <!-- Ekka Custom -->
 <script src="assets/js/ekka.js"></script>
 </body>
+
+<!-- Thêm đoạn mã JavaScript -->
+<script>
+    function verifySignature() {
+        var orderId = '<%=order.getId()%>';
+
+        // Gửi yêu cầu kiểm tra chữ ký đến Servlet (VerifySignatureController)
+        $.post('VerifySignatureController', {orderId: orderId}, function(data) {
+            // Xử lý kết quả trả về từ Servlet (data)
+            var resultElement = $('#signature-result');
+            resultElement.text(data); // Hiển thị thông báo kết quả
+        });
+    }
+</script>
+
+
 </html>
