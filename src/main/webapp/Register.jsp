@@ -129,7 +129,7 @@
                         </div>
                     </div>
                     <div class="col-sm-12 text-right">
-                        <!-- Nút "Tạo Key" -->
+                        <!-- Nút "Gửi OTP" -->
                         <button type="button" onclick="randomOTP()" class="btn btn-default custom-button">Gửi OTP
                         </button>
                         <p>Thời gian còn lại: <span id="timer">01:00</span></p>

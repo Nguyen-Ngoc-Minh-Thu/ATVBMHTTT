@@ -61,7 +61,6 @@ public class RegisterController extends HttpServlet {
                     if (account == null) {
                         String encodePassword = PasswordEncoder.hashPassword(password);
                         final Account acountNew = new Account(email, encodePassword, fullname, phone, sex, newsletter);
-
                         AccountDao.addAccount(acountNew);
                         AccountDao.addPublicKey(email, publicKey);
 //                        System.out.println(privateKey);

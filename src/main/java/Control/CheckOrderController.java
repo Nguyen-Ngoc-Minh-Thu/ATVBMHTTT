@@ -2,6 +2,7 @@ package Control;
 
 import Entity.*;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Set;
 import java.sql.SQLException;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.ServletException;
 import java.util.Base64;
+import java.security.MessageDigest;
 
 import RSASigner.RSASigner;
 
@@ -72,7 +74,7 @@ public class CheckOrderController extends HttpServlet {
 
             // Kiểm tra xem người dùng đã nhập private key hay chưa
             if (privateKey == null || privateKey.isEmpty()) {
-                // Nếu không có private key, xử lý lỗi hoặc chuyển hướng đến trang nhập lại
+                // Nếu không có private key, xử lý lỗi
                 request.setAttribute("error", "Vui lòng nhập private key");
 
                 return;
@@ -85,7 +87,11 @@ public class CheckOrderController extends HttpServlet {
             RSASigner rsa = new RSASigner();
             // Tạo chữ ký RSA dựa trên thông tin đơn hàng và chi tiết sản phẩm
             String od= fullname + numberphone + address + comment+listP;
-            String signature = rsa.encrypt(od, privateKey);
+
+            // Băm dữ liệu trước khi ký
+            String hashedData = rsa.hashData(od);
+
+            String signature = rsa.encrypt(hashedData, privateKey);
 
 // Lưu chữ ký vào cơ sở dữ liệu
             dao.updateOrderWithSignature(id_order, signature);
