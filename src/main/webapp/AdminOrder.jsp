@@ -417,7 +417,6 @@
                 resultElement.css('color', 'red'); // Hoặc màu khác tùy ý
             }
             resultElement.text(data);
-
         });
     }
 </script>

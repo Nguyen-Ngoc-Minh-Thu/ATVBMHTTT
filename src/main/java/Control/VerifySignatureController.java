@@ -13,7 +13,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.List;
 
 @WebServlet(name = "VerifySignatureController", value = "/VerifySignatureController")
@@ -44,19 +47,25 @@ public class VerifySignatureController extends HttpServlet {
             }
 
             Order order = orderDao.getOrder(id_order);
-            String data = order.getFullname()+order.getPhone()+order.getAddress()+order.getComment()+listP;
+            String data = order.getFullname()+order.getPhone()+order.getAddress()+order.getComment() +listP;
+
+
+
             // Lấy public key từ cơ sở dữ liệu
             String publicKey = orderDao.getPublicKeyByUsername(order.getUsername());
 
             // Xác minh chữ ký
             RSASigner rsa = new RSASigner();
 
-            // Tạo chữ ký RSA dựa trên thông tin đơn hàng và chi tiết sản phẩm
+            //Hash dl
+            String hashedData = rsa.hashData(data);
+
+            // Tạo giải chữ ký RSA dựa trên thông tin đơn hàng và chi tiết sản phẩm
             String signature = rsa.decrypt(receivedSignature,publicKey);
             System.out.println(data);
             System.out.println("de   "+signature);
             if(signature != null){
-                if (signature.equals(data)) {
+                if (signature.equals(hashedData)) {
                     // Gửi thông điệp thành công
                     response.getWriter().write("Chữ ký hợp lệ");
                 }else{

@@ -27,7 +27,6 @@ public class RSASigner {
     }
 
 
-
     // Hàm chuyển đổi khóa công khai sang chuỗi
     public String publicKeyToString() {
         byte[] publicKeyBytes = publicKey.getEncoded();
@@ -39,6 +38,18 @@ public class RSASigner {
         byte[] privateKeyBytes = privateKey.getEncoded();
         return Base64.getEncoder().encodeToString(privateKeyBytes);
     }
+
+    // Hàm băm dữ liệu
+    public String hashData(String data) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = digest.digest(data.getBytes(StandardCharsets.UTF_8));
+            return Base64.getEncoder().encodeToString(hashBytes);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error hashing data", e);
+        }
+    }
+
     public String encrypt(String data, String key) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         try {
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");

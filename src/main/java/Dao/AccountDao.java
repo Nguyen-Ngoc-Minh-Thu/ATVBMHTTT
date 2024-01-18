@@ -173,7 +173,6 @@ public class AccountDao
         sta.executeUpdate();
     }
 
-
     //Thư
     public static void setExpiredPublicKey(String username, String date) throws SQLException, ClassNotFoundException {
         DataDB db = new DataDB();

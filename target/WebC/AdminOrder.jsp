@@ -7,9 +7,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description" content="Ekka - Admin Dashboard HTML Template.">
 
     <title>Chi tiết đơn hàng</title>
@@ -17,18 +17,19 @@
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&display=swap"
+          rel="stylesheet">
 
-    <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet" />
+    <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet"/>
 
     <!-- PLUGINS CSS STYLE -->
-    <link href="assets/plugins/simplebar/simplebar.css" rel="stylesheet" />
+    <link href="assets/plugins/simplebar/simplebar.css" rel="stylesheet"/>
 
     <!-- Ekka CSS -->
-    <link id="ekka-css" rel="stylesheet" href="assets/css/ekka.css" />
+    <link id="ekka-css" rel="stylesheet" href="assets/css/ekka.css"/>
 
     <!-- FAVICON -->
-    <link href="assets/img/logoshop.png" rel="shortcut icon" />
+    <link href="assets/img/logoshop.png" rel="shortcut icon"/>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 
@@ -43,7 +44,7 @@
 
             <div class="ec-brand">
                 <a href="AdminIndex" title="CVT">
-                    <img class="ec-brand-icon" src="assets/img/logoshop.png" alt="" />
+                    <img class="ec-brand-icon" src="assets/img/logoshop.png" alt=""/>
                     <span class="ec-brand-name text-truncate">CVT Shop</span>
                 </a>
             </div>
@@ -188,12 +189,12 @@
                         <li class="dropdown user-menu">
                             <button class="dropdown-toggle nav-link ec-drop" data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                <img src="assets/img/user/user.png" class="user-image" alt="User Image" />
+                                <img src="assets/img/user/user.png" class="user-image" alt="User Image"/>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right ec-dropdown-menu">
                                 <!-- User image -->
                                 <li class="dropdown-header">
-                                    <img src="assets/img/user/user.png" class="img-circle" alt="User Image" />
+                                    <img src="assets/img/user/user.png" class="img-circle" alt="User Image"/>
                                     <div class="d-inline-block">
                                         Admin <small class="pt-1">
                                         <p>admin@gmail.com</p>
@@ -216,7 +217,7 @@
             </nav>
         </header>
         <% Order order = (Order) request.getAttribute("order");
-            Map<Product, Integer> map = (Map<Product, Integer>)request.getAttribute("listproduct"); %>
+            Map<Product, Integer> map = (Map<Product, Integer>) request.getAttribute("listproduct"); %>
         <!-- CONTENT WRAPPER -->
         <div class="ec-content-wrapper">
             <div class="content">
@@ -232,35 +233,41 @@
                                 <div class="row">
                                     <div class="col-xl-3 col-lg-6">
                                         <address class="info-grid">
-                                            <div class="info-title"><strong>Khách hàng:</strong></div><br>
+                                            <div class="info-title"><strong>Khách hàng:</strong></div>
+                                            <br>
                                             <div class="info-content">
                                                 <%=order.getFullname()%><br>
-                                                <abbr >Số điện thoại: </abbr> <%=order.getPhone()%>
-                                                <p>Ghi chú của khách hàng: <%=order.getComment()%></p>
+                                                <abbr>Số điện thoại: </abbr> <%=order.getPhone()%>
+                                                <p>Ghi chú của khách hàng: <%=order.getComment()%>
+                                                </p>
                                             </div>
                                         </address>
                                     </div>
                                     <div class="col-xl-3 col-lg-6">
                                         <address class="info-grid">
-                                            <div class="info-title"><strong>Vận chuyển đến:</strong></div><br>
+                                            <div class="info-title"><strong>Vận chuyển đến:</strong></div>
+                                            <br>
                                             <div class="info-content">
-                                                    <%=order.getAddress()%>
+                                                <%=order.getAddress()%>
                                             </div>
                                         </address>
                                     </div>
                                     <div class="col-xl-3 col-lg-6">
                                         <address class="info-grid">
-                                            <div class="info-title"><strong>Phương thức thanh toán</strong></div><br>
+                                            <div class="info-title"><strong>Phương thức thanh toán</strong></div>
+                                            <br>
                                             <div class="info-content">
                                                 <%=order.getPayment()%>
                                             </div>
                                             <br>
-                                            <div class="info-content">Bên vận chuyện:  <%=order.getShip()%></div>
+                                            <div class="info-content">Bên vận chuyện:  <%=order.getShip()%>
+                                            </div>
                                         </address>
                                     </div>
                                     <div class="col-xl-3 col-lg-6">
                                         <address class="info-grid">
-                                            <div class="info-title"><strong>Ngày đặt hàng</strong></div><br>
+                                            <div class="info-title"><strong>Ngày đặt hàng</strong></div>
+                                            <br>
                                             <div class="info-content">
                                                 <%=order.getTime()%><br>
                                                 <%=order.getDate()%>
@@ -285,37 +292,40 @@
                                                 </thead>
                                                 <tbody>
                                                 <% Set<Product> set = map.keySet();
-                                                    for(Product p : set)
-                                                    { %>
-                                                    <tr>
-                                                    <td><%=p.getId()%></td>
+                                                    for (Product p : set) { %>
+                                                <tr>
+                                                    <td><%=p.getId()%>
+                                                    </td>
                                                     <td><img class="product-img"
-                                                    src="<%=p.getImages().get(0)%>" alt="" /></td>
-                                                    <td><strong><%=p.getName()%></strong></td>
-                                                    <td class="text-center"><%=p.getPrice_buy()%></td>
-                                                    <td class="text-center"><%=map.get(p)%></td>
-                                                    <td class="text-right"><%=p.getPrice_buy()*map.get(p)%>&nbsp;VNĐ</td>
+                                                             src="<%=p.getImages().get(0)%>" alt=""/></td>
+                                                    <td><strong><%=p.getName()%>
+                                                    </strong></td>
+                                                    <td class="text-center"><%=p.getPrice_buy()%>
+                                                    </td>
+                                                    <td class="text-center"><%=map.get(p)%>
+                                                    </td>
+                                                    <td class="text-right"><%=p.getPrice_buy() * map.get(p)%>&nbsp;VNĐ</td>
                                                 </tr>
                                                 <%}%>
 
                                                 <tr>
                                                     <td colspan="4"></td>
                                                     <td class="text-right"><strong>Phí vận chuyển</strong></td>
-                                                    <td class="text-right"><strong><%=order.getTotalship()%>&nbsp;VNĐ</strong></td>
+                                                    <td class="text-right">
+                                                        <strong><%=order.getTotalship()%>&nbsp;VNĐ</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4">
                                                     </td>
                                                     <td class="text-right"><strong>Tổng cộng</strong></td>
-                                                    <td class="text-right"><strong><%=order.getTotal()%>&nbsp;VNĐ</strong></td>
+                                                    <td class="text-right">
+                                                        <strong><%=order.getTotal()%>&nbsp;VNĐ</strong></td>
                                                 </tr>
-
                                                 </tbody>
                                             </table>
-<%--                                            button Xác nhận ký--%>
                                             <button type="button" onclick="verifySignature()">Kiểm tra chữ ký</button>
-                                            <span id="signature-result"></span>
-
+                                            <p id="signature-result"
+                                               style="font-weight: bold; font-style: italic"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -324,36 +334,37 @@
                         <!-- Tracking Detail -->
                         <div class="card mt-4 trk-order">
                             <div class="p-4 text-center text-white text-lg bg-dark rounded-top">
-                            <form action="AdminEditOrder?idorder=<%=order.getId()%>" method="post">
-                                <span class="text-uppercase">Trạng thái đơn hàng</span>
-                                <select name="status" id="lang-select">
-                                    <% if(order.getStatus().equals("Đang xử lý")){ %>
-                                    <option value="Đang xử lý" disabled selected>Đang xử lý</option>
-                                    <option value="Hủy đơn hàng">Hủy đơn hàng</option>
-                                    <option value="Đã xác nhận">Đã xác nhận</option>
-                                    <% } else if(order.getStatus().equals("Hủy đơn hàng")){ %>
-                                    <option value="Hủy đơn hàng" disabled selected>Hủy đơn hàng</option>
-                                    <option value="Hủy đơn hàng">Hủy đơn hàng</option>
-                                    <option value="Đã xác nhận">Đã xác nhận</option>
-                                    <% } else if(order.getStatus().equals("Đã xác nhận")){ %>
-                                    <option value="Đã xác nhận" disabled selected>Đã xác nhận</option>
-                                    <option value="Đang giao hàng">Đang giao hàng</option>
-                                    <% } else if(order.getStatus().equals("Đang giao hàng")) { %>
-                                    <option value="Đang giao hàng" disabled selected>Đang giao hàng</option>
-                                    <option value="Giao hàng thành công">Giao hàng thành công</option>
-                                    <option value="Giao hàng thất bại">Giao hàng thất bại</option>
-                                    <% } else if(order.getStatus().equals("Giao hàng thành công")) { %>
-                                    <option value="Giao hàng thành công" disabled selected>Giao hàng thành công</option>
+                                <form action="AdminEditOrder?idorder=<%=order.getId()%>" method="post">
+                                    <span class="text-uppercase">Trạng thái đơn hàng</span>
+                                    <select name="status" id="lang-select">
+                                        <% if (order.getStatus().equals("Đang xử lý")) { %>
+                                        <option value="Đang xử lý" disabled selected>Đang xử lý</option>
+                                        <option value="Hủy đơn hàng">Hủy đơn hàng</option>
+                                        <option value="Đã xác nhận">Đã xác nhận</option>
+                                        <% } else if (order.getStatus().equals("Hủy đơn hàng")) { %>
+                                        <option value="Hủy đơn hàng" disabled selected>Hủy đơn hàng</option>
+                                        <option value="Hủy đơn hàng">Hủy đơn hàng</option>
+                                        <option value="Đã xác nhận">Đã xác nhận</option>
+                                        <% } else if (order.getStatus().equals("Đã xác nhận")) { %>
+                                        <option value="Đã xác nhận" disabled selected>Đã xác nhận</option>
+                                        <option value="Đang giao hàng">Đang giao hàng</option>
+                                        <% } else if (order.getStatus().equals("Đang giao hàng")) { %>
+                                        <option value="Đang giao hàng" disabled selected>Đang giao hàng</option>
+                                        <option value="Giao hàng thành công">Giao hàng thành công</option>
+                                        <option value="Giao hàng thất bại">Giao hàng thất bại</option>
+                                        <% } else if (order.getStatus().equals("Giao hàng thành công")) { %>
+                                        <option value="Giao hàng thành công" disabled selected>Giao hàng thành công
+                                        </option>
+                                        <% } else { %>
+                                        <option value="Giao hàng thất bại" disabled selected>Giao hàng thất bại</option>
+                                        <% } %>
+                                    </select>
+                                    <br>
+                                    <% if (order.getStatus().equals("Giao hàng thành công") || order.getStatus().equals("Giao hàng thất bại")) { %>
                                     <% } else { %>
-                                    <option value="Giao hàng thất bại" disabled selected>Giao hàng thất bại</option>
+                                    <button type="submit">Chỉnh sửa</button>
                                     <% } %>
-                                </select>
-                            <br>
-                                <% if(order.getStatus().equals("Giao hàng thành công")||order.getStatus().equals("Giao hàng thất bại")){ %>
-                                <% } else { %>
-                                <button type="submit">Chỉnh sửa</button>
-                                <% } %>
-                            </form>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -366,7 +377,9 @@
             <div class="copyright bg-white">
                 <p>
                     Copyright &copy; <span id="ec-year"></span><a class="text-primary"
-                                                                  href="https://www.facebook.com/nguyendaccuong2002" target="_blank"> NGUYEN DAC CUONG</a>. All Rights Reserved.
+                                                                  href="https://www.facebook.com/nguyendaccuong2002"
+                                                                  target="_blank"> NGUYEN DAC CUONG</a>. All Rights
+                    Reserved.
                 </p>
             </div>
         </footer>
@@ -375,7 +388,8 @@
 </div> <!-- End Wrapper -->
 
 <!-- Common Javascript -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/plugins/jquery/jquery-3.5.1.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="assets/plugins/jquery/jquery-3.5.1.min.js"></script>
 <script src="assets/js/bootstrap.bundle.min.js"></script>
 <script src="assets/plugins/simplebar/simplebar.min.js"></script>
 <script src="assets/plugins/jquery-zoom/jquery.zoom.min.js"></script>
@@ -394,10 +408,15 @@
         var orderId = '<%=order.getId()%>';
 
         // Gửi yêu cầu kiểm tra chữ ký đến Servlet (VerifySignatureController)
-        $.post('VerifySignatureController', {orderId: orderId}, function(data) {
+        $.post('VerifySignatureController', {orderId: orderId}, function (data) {
             // Xử lý kết quả trả về từ Servlet (data)
             var resultElement = $('#signature-result');
-            resultElement.text(data); // Hiển thị thông báo kết quả
+            if (data === 'Chữ ký hợp lệ') {
+                resultElement.css('color', 'green');
+            } else {
+                resultElement.css('color', 'red'); // Hoặc màu khác tùy ý
+            }
+            resultElement.text(data);
         });
     }
 </script>
